@@ -19,3 +19,13 @@
       - 연관관계의 주인 쪽의 참조 속성을 연관관계의 주인 쪽의 외래 키와 매핑한다.
       - 연관관계의 주인 쪽에서 값을 변경할 수 있다. 반대 쪽은 조회만 가능하다.
       - ![img_1.png](img_1.png)
+    - 엔티티 클래스 개발 1
+      - 실무에서는 가급적 Getter 만 열어두고 Setter 는 꼭 필요한 경우에만 사용
+      - 엔티티를 변경할 대는 Setter 대신에 변경 지점이 명확하도록 변경을 위한 비즈니스 메서드를 별도 제공할 것.
+      - OneToOne 관계 같은 경우 FK를 어디에 두어도 상관이 없다. ACCESS 를 자주 하는 곳에 두는 게 좋다.
+      - @ManyToOne(), @JoinColumn(name = " " ), @OneToMany(mappedBy = " ") 이런 식으로 연관관계 매핑한다.
+      - FK를 가지고 있는 쪽에서 값을 넣어야 반대편이 변경될 수 있다. 연관 관계의 주인에서 값을 넣으면 변경되지 않는다.
+      - @Enumerated(EnumType.String) Ordinary 로 타입을 줄 수 있으나 나중에 상태가 추가되었을 경우 크게 문제가 생길 수 있다. String 타입으로 넘겨주는 게 현명하다.
+      - 상속 하는 클래스 엔티티 들의 경우
+        - @Inheritance(strategy = InheritanceType.) JOINED 는 가장 정규화된 스타일이다, SINGLE_TABLE 은 한 테이블에 모두 모으는 것, TABLE_PER_CLASS 는 클래스마다 테이블로 나누는 전략
+        - @DiscriminatorColumn(name = "dtype") TYPE 별로 구분해 준다.
