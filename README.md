@@ -56,3 +56,12 @@
         - 로그인 기능이나 권한 같은 기능은 구현 X
       - 어플리케이션 아키텍처
         - ![img_3.png](img_3.png)
+    - <h3>회원 도메인 개발</h3>
+      - 회원 리포지토리 개발
+        - @Repository
+        - @PersistenceContext EntityManager
+      - 회원 서비스 개발
+        - @RequiredArgsConstructor ( final 키워드 )
+        - 생성자 주입 방식
+        - validation 동시성 고려하여 유니크 제약 조건 고려할 것 ( 실무 )
+        - Service 단에서는 @Transactional 으로 트랜잭션 처리를 하고 조회 부분에서는 readonly 속성을 추가할 것
