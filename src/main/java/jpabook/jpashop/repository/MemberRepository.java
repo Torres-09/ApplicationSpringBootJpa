@@ -10,12 +10,11 @@ import java.util.List;
 
 // spring bean 에 자동등록
 @Repository
-@RequiredArgsConstructor
 public class MemberRepository {
 
     // spring entity manager 주입 받을 수 있다. ( 자동주입 )
-    //    @PersistenceContext
-    private final EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
     public void save(Member member) {
         em.persist(member);
