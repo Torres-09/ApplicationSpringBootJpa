@@ -67,3 +67,8 @@
         - Service 단에서는 @Transactional 으로 트랜잭션 처리를 하고 조회 부분에서는 readonly 속성을 추가할 것
       - 회원 기능 테스트
         - 테스트를 진행하면서 느낀 점 : **디렉토리 구조를 잘 확인하자..** 
+        - @Rollback(false) 하면 Rollback 하지 않는다.
+        - 엔티티 매니저를 생성하고 @Autowired 로 등록한 이후에 em.flush()를 통해서 insert 를 할 수 있다. DB 에 영속성 컨텐츠를 보내는 것이다.
+        - 그렇지만 상위에 @Transactional 이 있기 때문에 insert 가 기록만 되고 롤백된다.
+        - test 환경에 resource 를 별도로 두어서 memory 환경에서 DB 테스트 가능 ( spring 에서는 기본 제공 
+        - 분리하는 것이 당연하다.

@@ -16,6 +16,7 @@ public class MemberRepository {
     @PersistenceContext
     private EntityManager em;
 
+    // persist 를 한다고 해서 DB에 insert ? 아니다. 커밋을 해야 함.
     public void save(Member member) {
         em.persist(member);
     }
