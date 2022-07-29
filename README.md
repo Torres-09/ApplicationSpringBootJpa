@@ -91,3 +91,8 @@
       - 주문 기능 테스트
         - fail()
         - assertEquals
+      - 주문 검색 기능 개발
+        - 동적 쿼리 관련
+          - JPA Criteria
+          - JPQL
+          - QueryDSL
