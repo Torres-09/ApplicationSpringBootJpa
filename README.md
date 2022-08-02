@@ -100,3 +100,7 @@
         - 홈 화면과 레이아웃
           - 타임리프를 이용하여 홈 화면 제작
           - devtools 가 그래들에 추가되어 있으면 변경사항이 있어도 컴파일만 하면 적용된다.
+        - 회원 등록
+          - @NotEmpty(message = " ") - > BindingResult result, result.hasError() 와 함께 조합하여 예외처리 한다.
+          - javax.validation
+          - 엔티티 와 dto 는 별개로 만드는 것이 좋다. ( 엔티티를 파라미터로 받는 경우는 실무에서는 거의 없다고 봐도 무방하다. )
