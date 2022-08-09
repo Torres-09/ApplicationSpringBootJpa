@@ -36,4 +36,9 @@ public class MemberRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
+
+    public List<Member> findAllOrderByDesc() {
+        return em.createQuery("select m from Member m order by m.id desc ", Member.class)
+                .getResultList();
+    }
 }

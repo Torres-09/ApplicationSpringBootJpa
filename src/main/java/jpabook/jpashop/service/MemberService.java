@@ -50,6 +50,10 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public List<Member> findMembersDesc() {
+        return memberRepository.findAllOrderByDesc();
+    }
+
     // 성능 최적화 ( 조회에서 )
     public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);
