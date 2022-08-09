@@ -65,15 +65,21 @@ public class ItemController {
 
     @PostMapping("/items/{itemId}/edit")
     public String updateItemForm(@ModelAttribute("form") BookForm form, @PathVariable String itemId) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
 
-        itemService.saveItem(book);
+        // 객체를 새롭게 생성했지만 id는 기존에 있던 것을 받아와서 넣어주었다.
+        // 이런 객체를 준영속 엔티티, 준영속 상태라고 한다.
+        // 영속성 컨텍스트가 더는 관리하지 않는 엔티티이다.
+
+
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+
+        itemService.updateItem(form.getId(),form.getName(),form.getPrice());
         return "redirect:/items";
     }
 }
