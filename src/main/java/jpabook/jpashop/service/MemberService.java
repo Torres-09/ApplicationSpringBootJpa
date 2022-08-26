@@ -46,6 +46,11 @@ public class MemberService {
     }
 
     // 회원 전체 조회
+
+    /**
+     * 회원 전체 조회
+     * @return 전체회원
+     */
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }

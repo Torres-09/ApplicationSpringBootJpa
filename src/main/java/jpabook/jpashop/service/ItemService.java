@@ -34,6 +34,11 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    /**
+     * 상품 찾기
+     * @param id
+     * @return 상품
+     */
     public Item findOne(Long id) {
         return itemRepository.findOne(id);
     }
