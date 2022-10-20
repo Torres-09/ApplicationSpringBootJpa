@@ -1,7 +1,16 @@
+buildscript {
+    ext {
+
+        queryDslVersion = "5.0.0";
+    }
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.7.1'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.7.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'war'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'jpabook'
@@ -9,35 +18,86 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-devtools'
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
     implementation 'junit:junit:4.13.2'
     compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+}
+
+
+/* 10-5. querydsl에서 사용할 경로 지정*/
+
+def querydslDir = "src/main/generated"
+
+
+/* 10-6. JPA사용 여부와 사용할 경로를 지정*/
+
+querydsl {
+
+    jpa = true
+
+    querydslSourcesDir = querydslDir
+
+}
+
+/* 10-7. build시 사용할 SourceSet 추가 */
+
+sourceSets {
+
+    main.java.srcDir querydslDir
+
+}
+
+
+/* 10-8. querydsl이 complieClasspath를 상속하도록 설정 */
+
+configurations {
+
+    querydsl.extendsFrom compileClasspath
+
+}
+
+/* 10-9. querydsl 컴파일시 사용할 옵션 설정 */
+
+compileQuerydsl {
+
+    options.annotationProcessorPath = configurations.querydsl
+
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
