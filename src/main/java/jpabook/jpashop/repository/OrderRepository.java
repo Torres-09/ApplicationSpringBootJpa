@@ -4,8 +4,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
-import jpabook.jpashop.domain.QMember;
-import jpabook.jpashop.domain.QOrder;
 import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -66,43 +64,43 @@ public class OrderRepository {
         return query.getResultList();
     }
 
-    public List<Order> findAll(OrderSearch orderSearch) {
-        QOrder order = QOrder.order;
-        QMember member = QMember.member;
-
-        JPAQueryFactory query = new JPAQueryFactory(em);
-        return query
-                .select(order)
-                .from(order)
-                .join(order.member, member)
-                .limit(1000)
-                .where(statusEq(orderSearch.getOrderStatus()),
-                        nameLike(orderSearch.getMemberName()))
-                .fetch();
-
-
-//        // 값이 있다면 괜찮지만 값이 없다면?
-//        // JPQL 쿼리를 문자로 생성하는 것은 번거롭고 실수가 생긴다
-//        return em.createQuery("select o from Order o join o.member m where o.status = :status and m.name like :name", Order.class)
-//                .setParameter("status", orderSearch.getOrderStatus())
-//                .setParameter("name", orderSearch.getMemberName())
-//                .setMaxResults(1000) // 최대 1000건
-//                .getResultList();
-    }
-
-    private BooleanExpression nameLike(String memberName) {
-        if (!StringUtils.hasText(memberName))
-            return null;
-
-        return QMember.member.name.like(memberName);
-    }
-
-    private BooleanExpression statusEq(OrderStatus statusCond) {
-        if (statusCond == null) {
-            return null;
-        }
-        return QOrder.order.status.eq(statusCond);
-    }
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//        QOrder order = QOrder.order;
+//        QMember member = QMember.member;
+//
+//        JPAQueryFactory query = new JPAQueryFactory(em);
+//        return query
+//                .select(order)
+//                .from(order)
+//                .join(order.member, member)
+//                .limit(1000)
+//                .where(statusEq(orderSearch.getOrderStatus()),
+//                        nameLike(orderSearch.getMemberName()))
+//                .fetch();
+//
+//
+////        // 값이 있다면 괜찮지만 값이 없다면?
+////        // JPQL 쿼리를 문자로 생성하는 것은 번거롭고 실수가 생긴다
+////        return em.createQuery("select o from Order o join o.member m where o.status = :status and m.name like :name", Order.class)
+////                .setParameter("status", orderSearch.getOrderStatus())
+////                .setParameter("name", orderSearch.getMemberName())
+////                .setMaxResults(1000) // 최대 1000건
+////                .getResultList();
+//    }
+//
+//    private BooleanExpression nameLike(String memberName) {
+//        if (!StringUtils.hasText(memberName))
+//            return null;
+//
+//        return QMember.member.name.like(memberName);
+//    }
+//
+//    private BooleanExpression statusEq(OrderStatus statusCond) {
+//        if (statusCond == null) {
+//            return null;
+//        }
+//        return QOrder.order.status.eq(statusCond);
+//    }
 
 
     // JPA Criteria

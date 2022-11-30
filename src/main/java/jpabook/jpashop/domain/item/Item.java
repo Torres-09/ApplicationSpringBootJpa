@@ -26,6 +26,10 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
+    /**
+     * manyToMany 관계는 실무에서는 절대 사용하지 않는다. 중간에 각각을 매핑해주는 테이블이 있어야 하는데 여기서는
+     * manyToMany 매핑을 보여주기 위해서 구현한 내용이다.
+     */
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
