@@ -3,6 +3,7 @@ package jpabook.jpashop.api;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderRepositoryIn;
 import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
@@ -11,6 +12,8 @@ import jpabook.jpashop.repository.order.query.OrderQueryRepository;
 import jpabook.jpashop.service.query.OrderDto;
 import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +27,9 @@ import static java.util.stream.Collectors.*;
 public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+    private final OrderQueryService orderQueryService;
 
+    private final OrderRepositoryIn orderRepositoryIn;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -49,7 +54,6 @@ public class OrderApiController {
         return collect;
     }
 
-    private final OrderQueryService orderQueryService;
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         return orderQueryService.orderV3();
@@ -61,6 +65,18 @@ public class OrderApiController {
             @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
         List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(toList());
+
+        return collect;
+    }
+
+    @GetMapping("/api/v3.2/orders")
+    public List<OrderDto> ordersV3_2_page(
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        List<Order> orders = orderRepositoryIn.findAllByDeliveryAndMember(pageable);
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(toList());
