@@ -48,6 +48,11 @@ public class OrderSimpleApiController {
         return result;
     }
 
+    /**
+     * XToOne 에서 할 수 있는 가장 이상적인 최적화, DTO , 페치조인으로 인한 LazyLoading 이슈 제거
+     * 더 디벨롭 할 수 있다면 service 계층을 추가하여 service 계층에서 엔티티를 dto 로 변환한 후 컨트롤러에서는 오직 서비스 계층에만 접근
+     * @return
+     */
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDto> orderV3() {
         List<Order> orders = orderRepository.findAllWithMemberDelivery();

@@ -29,6 +29,10 @@ public class Order {
     private Member member;
 
     // 원래는 각각 orderitem을 persist 하고 order를 따로 persist 해야 하는 데, order만 persist 하게 되면 item도 같이 persist된다.
+    /**
+     * cascade 옵션, 상태 전이를 위해서 사용한다. 다대일 일대다 관계에서 주로 사용하고 엔티티의 상태 전이를 통해서 연관관계에 있는
+     * 엔티티의 상태를 변화시킨다.
+     */
     @OneToMany(mappedBy = "order", cascade = ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
