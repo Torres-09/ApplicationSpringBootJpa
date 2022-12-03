@@ -2,23 +2,26 @@ package jpabook.jpashop.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook.jpashop.domain.Member;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
+import jpabook.jpashop.domain.QMember;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 import static jpabook.jpashop.domain.QMember.member;
 
-@Repository
-public class MemberRepositorySupport extends QuerydslRepositorySupport {
-
+@RequiredArgsConstructor
+public class MemberRepositoryImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
-    public MemberRepositorySupport(JPAQueryFactory queryFactory) {
-        super(Member.class);
-        this.queryFactory = queryFactory;
+    @Override
+    public List<Member> findAllOrderByDesc() {
+        return queryFactory
+                .selectFrom(member)
+                .orderBy()
+                .fetch();
     }
 
+    @Override
     public List<Member> findByName(String name) {
         return queryFactory
                 .selectFrom(member)

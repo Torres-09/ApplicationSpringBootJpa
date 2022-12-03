@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static jpabook.jpashop.domain.QMember.member;
-
 @Repository
 public class OrderRepositorySupport extends QuerydslRepositorySupport {
     private final JPAQueryFactory queryFactory;
@@ -18,12 +16,5 @@ public class OrderRepositorySupport extends QuerydslRepositorySupport {
     public OrderRepositorySupport(JPAQueryFactory queryFactory) {
         super(Order.class);
         this.queryFactory = queryFactory;
-    }
-
-    public List<Member> findByName(String name) {
-        return queryFactory
-                .selectFrom(member)
-                .where(member.name.eq(name))
-                .fetch();
     }
 }
