@@ -54,6 +54,16 @@ public class OrderApiController {
         return collect;
     }
 
+    @GetMapping("/api/v2.0/orders")
+    public List<OrderDto> ordersV2_0() {
+        List<Order> orders = orderRepositoryIn.findAll();
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(toList());
+
+        return collect;
+    }
+
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         return orderQueryService.orderV3();
@@ -76,7 +86,7 @@ public class OrderApiController {
     public List<OrderDto> ordersV3_2_page(
             @PageableDefault(size = 20) Pageable pageable) {
 
-        List<Order> orders = orderRepositoryIn.findAllByDeliveryAndMember(pageable);
+        List<Order> orders = orderRepositoryIn.findAllWithMemberAndDelivery(pageable);
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(toList());
