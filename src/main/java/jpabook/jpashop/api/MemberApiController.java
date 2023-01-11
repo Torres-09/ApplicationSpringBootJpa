@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,12 +19,17 @@ import java.util.stream.Collectors;
 public class MemberApiController {
     private final MemberService memberService;
 
-    @PostMapping("/api/v1/members")
-    public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
-        Long id = memberService.join(member);
-        return new CreateMemberResponse(id);
-    }
+//    @PostMapping("/api/v1/members")
+//    public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
+//        Long id = memberService.join(member);
+//        return new CreateMemberResponse(id);
+//    }
 
+    /**
+     * 회원 생성
+     * @param request
+     * @return
+     */
     @PostMapping("/api/v2/members")
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
@@ -50,10 +54,10 @@ public class MemberApiController {
         return new UpdateMemberResponse(findMember.getId(), findMember.getName());
     }
 
-    @GetMapping("/api/v1/members")
-    public List<Member> membersV1() {
-        return memberService.findMembers();
-    }
+//    @GetMapping("/api/v1/members")
+//    public List<Member> membersV1() {
+//        return memberService.findMembers();
+//    }
 
     @GetMapping("/api/v2/members")
     public ResponseEntity membersV2() {

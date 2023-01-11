@@ -1,0 +1,27 @@
+= Spring REST Docs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 회원 생성
+
+=== 요청
+
+include::{snippets}/create-member-v2/http-request.adoc[]
+
+include::{snippets}/create-member-v2/request-fields.adoc[]
+
+
+=== 응답
+
+include::{snippets}/create-member-v2/http-response.adoc[]
+
+== 회원 전체 조회
+
+=== 요청
+
+include::{snippets}/get-member-v2/http-request.adoc[]
+
+=== 응답
+
+include::{snippets}/get-member-v2/http-response.adoc[]
